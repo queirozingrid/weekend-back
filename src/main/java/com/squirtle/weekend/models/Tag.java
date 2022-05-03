@@ -11,17 +11,16 @@ import org.springframework.lang.NonNull;
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
+@Entity(name = "tag")
 @Getter @Setter
 public class Tag {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@NonNull
 	@NotBlank
 	private String nome;
-
 	public Long getId() {
 		return id;
 	}
@@ -38,4 +37,5 @@ public class Tag {
 	public void setNome(@NonNull String nome) {
 		this.nome = nome;
 	}
+
 }

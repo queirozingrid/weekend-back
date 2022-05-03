@@ -11,6 +11,8 @@ import org.springframework.lang.NonNull;
 import lombok.Getter;
 import lombok.Setter;
 
+
+
 @Entity(name = "categoria")
 @Getter @Setter
 public class Categoria {

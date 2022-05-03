@@ -15,7 +15,7 @@ public class TagController {
     @Autowired
     TagRepository tagRepository;
 
-    @GetMapping("/todas")
+    @GetMapping("/todos")
     public List<Tag> listar(){
         return tagRepository.findAll();
     }

@@ -16,7 +16,7 @@ public class EnderecoController {
     @Autowired
     EnderecoRepository enderecoRepository;
 
-    @GetMapping("/todas")
+    @GetMapping("/todos")
     public List<Endereco> listar(){
         return enderecoRepository.findAll();
     }

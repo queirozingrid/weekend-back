@@ -38,5 +38,4 @@ public class Tag {
 		this.nome = nome;
 	}
 
-
 }

@@ -1,4 +1,4 @@
-package com.squirtle.weekend.repositories;
+package com.squirtle.weekend.repository;
 
 import com.squirtle.weekend.models.Tag;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,7 +9,5 @@ import java.util.List;
 @Repository
 public interface TagRepository extends JpaRepository<Tag, Long> {
     Tag save(Tag tag);
-
-    @Override
     List<Tag> findAll();
 }

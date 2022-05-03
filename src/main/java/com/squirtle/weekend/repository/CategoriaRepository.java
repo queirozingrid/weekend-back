@@ -1,4 +1,4 @@
-package com.squirtle.weekend.repositories;
+package com.squirtle.weekend.repository;
 
 import com.squirtle.weekend.models.Categoria;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,8 +9,5 @@ import java.util.List;
 @Repository
 public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
     Categoria save(Categoria categoria);
-
-    @Override
     List<Categoria> findAll();
-
 }

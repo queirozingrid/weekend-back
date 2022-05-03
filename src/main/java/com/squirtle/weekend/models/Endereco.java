@@ -33,4 +33,48 @@ public class Endereco {
 	@NotBlank
 	@NonNull
 	private String numero;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	@NonNull
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(@NonNull String cep) {
+		this.cep = cep;
+	}
+
+	@NonNull
+	public String getRua() {
+		return rua;
+	}
+
+	public void setRua(@NonNull String rua) {
+		this.rua = rua;
+	}
+
+	@NonNull
+	public String getBairro() {
+		return bairro;
+	}
+
+	public void setBairro(@NonNull String bairro) {
+		this.bairro = bairro;
+	}
+
+	@NonNull
+	public String getNumero() {
+		return numero;
+	}
+
+	public void setNumero(@NonNull String numero) {
+		this.numero = numero;
+	}
 }

@@ -8,9 +8,7 @@
       </list>
     </option>
   </component>
-<<<<<<< HEAD
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK" />
-=======
   <component name="NullableNotNullManager">
     <option name="myDefaultNullable" value="org.jetbrains.annotations.Nullable" />
     <option name="myDefaultNotNull" value="org.springframework.lang.NonNull" />
@@ -53,7 +51,6 @@
     </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="17" project-jdk-type="JavaSDK" />
->>>>>>> f1e61c29df21d6f743fd1d3b84682104ec458701
   <component name="ProjectType">
     <option name="id" value="jpab" />
   </component>

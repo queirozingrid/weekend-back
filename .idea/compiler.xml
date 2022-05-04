@@ -11,9 +11,6 @@
         <module name="weekend" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="weekend" target="11" />
-    </bytecodeTargetLevel>
   </component>
   <component name="EclipseCompilerSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">

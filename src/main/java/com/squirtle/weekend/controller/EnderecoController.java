@@ -32,4 +32,7 @@ public class EnderecoController {
         return enderecoRepository.save(endereco);
     }
 
+    @GetMapping("/buscarPorCep/{cep}")
+    public Optional<Endereco> listarPorCep(@PathVariable(value = "cep") String cep) { return enderecoRepository.findByCep(cep); }
+
 }

@@ -7,21 +7,28 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("estabelecimento")
+@RequestMapping("/estabelecimento")
 public class EstabelecimentoController {
 
     @Autowired
     EstabelecimentoRepository estabelecimentoRepository;
 
-    @PostMapping("salvar")
+    @PostMapping("/salvar")
     public Estabelecimento salvar(@RequestBody Estabelecimento estabelecimento){
         return estabelecimentoRepository.save(estabelecimento);
     }
 
-    @GetMapping("todos")
+    @GetMapping("/todos")
     public List<Estabelecimento> listarTodos(){
         return estabelecimentoRepository.findAll();
     }
+
+    @GetMapping("/{id}")
+    public Optional<Estabelecimento> listarPorId(@PathVariable(value = "id") Long id) { return estabelecimentoRepository.findById(id); }
+
+    @DeleteMapping("/{id}")
+    public void deletar(@PathVariable(value = "id") Long id) { estabelecimentoRepository.deleteById(id); }
 }

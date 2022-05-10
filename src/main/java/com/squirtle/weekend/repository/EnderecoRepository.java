@@ -17,4 +17,5 @@ public interface EnderecoRepository extends JpaRepository<Endereco, Long> {
     @Override
     Optional<Endereco> findById(Long id);
 
+    Optional<Endereco> findByCep(String cep);
 }

@@ -1,8 +1,11 @@
 package com.squirtle.weekend.controller;
 
 import com.squirtle.weekend.models.Tag;
+import com.squirtle.weekend.models.Tag;
 import com.squirtle.weekend.repository.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -29,6 +32,12 @@ public class TagController {
     @PostMapping("/salvar")
     public Tag salvar(@RequestBody @Valid Tag tag){
         return tagRepository.save(tag);
+    }
+
+    @PutMapping("/editar")
+    public ResponseEntity<Tag> editar(@RequestBody @Valid Tag tag){
+        Tag t2 = tagRepository.save(tag);
+        return new ResponseEntity<Tag>(t2, HttpStatus.OK);
     }
 
 

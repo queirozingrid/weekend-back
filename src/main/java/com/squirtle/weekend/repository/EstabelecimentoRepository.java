@@ -13,4 +13,8 @@ public interface EstabelecimentoRepository extends JpaRepository<Estabelecimento
 
     @Override
     List<Estabelecimento> findAll();
+
+    @Override
+    Optional<Estabelecimento> findById(Long id);
+
 }

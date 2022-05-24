@@ -11,7 +11,7 @@ public class CorsConfig {
         return new WebMvcConfigurerAdapter() {
             @Override
             public void addCorsMappings(CorsRegistry registry){
-                registry.addMapping("/weekend")
+                registry.addMapping("/weekend/**")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "TRACE", "CONNECT")
                         .allowedOrigins("*")
                         .allowedHeaders("*");

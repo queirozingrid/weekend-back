@@ -11,7 +11,7 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/categoria")
 public class CategoriaController {
@@ -30,6 +30,7 @@ public class CategoriaController {
     public void deletar(@PathVariable(value = "id") Long id) { categoriaRepository.deleteById(id);}
 
     @PostMapping("/salvar")
+    @CrossOrigin(origins = "*")
     public Categoria salvar(@RequestBody @Valid Categoria categoria){
         return categoriaRepository.save(categoria);
     }

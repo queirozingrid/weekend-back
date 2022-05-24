@@ -3,6 +3,8 @@ package com.squirtle.weekend.controller;
 import com.squirtle.weekend.models.Categoria;
 import com.squirtle.weekend.repository.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -14,7 +16,7 @@ import java.util.Optional;
 @RequestMapping("/categoria")
 public class CategoriaController {
     @Autowired
-    CategoriaRepository categoriaRepository;
+    private CategoriaRepository categoriaRepository;
 
     @GetMapping("/todos")
     public List<Categoria> listar(){
@@ -30,5 +32,11 @@ public class CategoriaController {
     @PostMapping("/salvar")
     public Categoria salvar(@RequestBody @Valid Categoria categoria){
         return categoriaRepository.save(categoria);
+    }
+
+    @PutMapping("/editar")
+    public ResponseEntity<Categoria> editar(@RequestBody @Valid Categoria categoria){
+        Categoria c2 = categoriaRepository.save(categoria);
+        return new ResponseEntity<Categoria>(c2, HttpStatus.OK);
     }
 }

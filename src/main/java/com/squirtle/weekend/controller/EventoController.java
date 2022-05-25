@@ -13,7 +13,7 @@ import java.util.Optional;
 @RequestMapping("/evento")
 public class EventoController {
     @Autowired
-    EventoRepository eventoRepository;
+    private EventoRepository eventoRepository;
 
     @PostMapping("/salvar")
     public Evento salvar(@RequestBody @Valid Evento evento) { return eventoRepository.save(evento); }

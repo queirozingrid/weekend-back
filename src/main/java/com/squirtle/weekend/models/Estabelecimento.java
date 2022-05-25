@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cascade;
 import org.springframework.lang.NonNull;
 
@@ -18,39 +19,40 @@ public class Estabelecimento {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@NotBlank
 	@NonNull
 	private String cnpj;
-	
+
 	@NotBlank
 	@NonNull
 	private String nomeFantasia;
-	
+
 	@NotBlank
 	@NonNull
 	private String razaoSocial;
-	
+
 	@Email
 	@NonNull
 	@NotBlank
 	private String email;
-	
+
 	@NotBlank
 	@NonNull
+	//@JsonIgnore
 	private String senha;
-	
+
 	@NotBlank
 	@NonNull
 	private String telefone1;
-	
+
 	private String telefone2;
-	
+
 	private String logo;
-	
+
 	@OneToOne(cascade = CascadeType.PERSIST)
 	private Endereco endereco;
-	
+
 	@ManyToMany(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "estabelecimento_categoria")
 	private List<Categoria> categorias;

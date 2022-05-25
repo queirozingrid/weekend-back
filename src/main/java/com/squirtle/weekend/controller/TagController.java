@@ -16,7 +16,7 @@ import java.util.Optional;
 @RequestMapping("/tag")
 public class TagController {
     @Autowired
-    TagRepository tagRepository;
+    private TagRepository tagRepository;
 
     @GetMapping("/todos")
     public List<Tag> listar(){

@@ -19,23 +19,27 @@ public class CategoriaController {
     private CategoriaRepository categoriaRepository;
 
     @GetMapping("/todos")
+    //@PreAuthorize("hasRole('USER')")
     public List<Categoria> listar(){
         return categoriaRepository.findAll();
     }
 
     @GetMapping("/{id}")
+    //@PreAuthorize("hasRole('USER')")
     public Optional<Categoria> buscar(@PathVariable(value = "id") Long id) { return categoriaRepository.findById(id); }
 
     @DeleteMapping("/{id}")
+    //@PreAuthorize("hasRole('ADMIN')")
     public void deletar(@PathVariable(value = "id") Long id) { categoriaRepository.deleteById(id);}
 
     @PostMapping("/salvar")
-    @CrossOrigin(origins = "*")
+    //@PreAuthorize("hasRole('ADMIN')")
     public Categoria salvar(@RequestBody @Valid Categoria categoria){
         return categoriaRepository.save(categoria);
     }
 
     @PutMapping("/editar")
+    //@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Categoria> editar(@RequestBody @Valid Categoria categoria){
         Categoria c2 = categoriaRepository.save(categoria);
         return new ResponseEntity<Categoria>(c2, HttpStatus.OK);

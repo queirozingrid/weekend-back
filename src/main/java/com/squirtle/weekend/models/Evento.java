@@ -1,12 +1,18 @@
 package com.squirtle.weekend.models;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.List;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.NonNull;
 
 import lombok.Getter;
@@ -28,9 +34,9 @@ public class Evento {
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "estabelecimentoId", referencedColumnName = "id", nullable = false)
 	private Estabelecimento estabelecimento;
-	
+
 	@NonNull
-	private LocalDateTime data = LocalDateTime.now();
+	private LocalDateTime data;
 	private String descricao;
 	
 	@NotNull

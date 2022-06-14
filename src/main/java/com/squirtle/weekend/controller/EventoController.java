@@ -1,8 +1,11 @@
 package com.squirtle.weekend.controller;
 
 import com.squirtle.weekend.models.Evento;
+import com.squirtle.weekend.models.Tag;
 import com.squirtle.weekend.repository.EventoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -18,6 +21,12 @@ public class EventoController {
 
     @PostMapping("/salvar")
     public Evento salvar(@RequestBody @Valid Evento evento) { return eventoRepository.save(evento); }
+
+    @PutMapping("/editar")
+    public ResponseEntity<Evento> editar(@RequestBody @Valid Evento evento){
+        Evento e2 = eventoRepository.save(evento);
+        return new ResponseEntity<Evento>(e2, HttpStatus.OK);
+    }
 
     @DeleteMapping("/{id}")
     public void deletar(@PathVariable(value = "id") Long id) { eventoRepository.deleteById(id); }

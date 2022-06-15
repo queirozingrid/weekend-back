@@ -25,7 +25,8 @@ public class EventoController {
     @RequestMapping(value = "/editar", produces = "application/json", method=RequestMethod.PUT)
     public ResponseEntity<Evento> editar(@RequestBody @Valid Evento evento){
         Evento e2 = eventoRepository.save(evento);
-        return new ResponseEntity<Evento>(e2, HttpStatus.OK);
+        ResponseEntity<Evento> reponse = new ResponseEntity<Evento>(e2, HttpStatus.OK);
+        return reponse;
     }
 
     @DeleteMapping("/{id}")

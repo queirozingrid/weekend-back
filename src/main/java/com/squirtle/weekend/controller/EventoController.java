@@ -22,7 +22,7 @@ public class EventoController {
     @PostMapping("/salvar")
     public Evento salvar(@RequestBody @Valid Evento evento) { return eventoRepository.save(evento); }
 
-    @PutMapping("/editar")
+    @RequestMapping(value = "/editar", produces = "application/json", method=RequestMethod.PUT)
     public ResponseEntity<Evento> editar(@RequestBody @Valid Evento evento){
         Evento e2 = eventoRepository.save(evento);
         return new ResponseEntity<Evento>(e2, HttpStatus.OK);

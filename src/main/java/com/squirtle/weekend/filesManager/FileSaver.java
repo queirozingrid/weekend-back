@@ -1,27 +1,31 @@
 package com.squirtle.weekend.filesManager;
 
-import com.google.cloud.storage.BlobInfo;
-import com.google.cloud.storage.Bucket;
-import com.google.cloud.storage.BucketInfo;
-import com.google.cloud.storage.Storage;
+import com.google.cloud.storage.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 public class FileSaver {
-    private static String path = "https://console.cloud.google.com/storage/browser/imagens-wknd/";
+    private static String path = "https://storage.googleapis.com/imagens-wknd/logos-est/";
 
     @Autowired
-    private static Storage storage;
+    private static Storage storage = StorageOptions.getDefaultInstance().getService();
 
-    public static String saveLogo(String fileName) {
-        String directory = "logos-est";
-        String fullPath = path + directory + "/" + fileName;
-        Bucket bucket = storage.create(BucketInfo.of(path));
+    public static String saveLogo(MultipartFile logo){
+        try {
+            BlobInfo blob = storage.create(
+                    BlobInfo.newBuilder("imagens-wknd", logo.getOriginalFilename()).build(),
+                    logo.getBytes(),
+                    Storage.BlobTargetOption.predefinedAcl(Storage.PredefinedAcl.PUBLIC_READ)
+            );
+            System.out.printf(blob.getMediaLink());
+            return blob.getMediaLink();
 
-        storage.create(
-                BlobInfo.newBuilder(path, directory + "/" + fileName).build(),
-                "file contents".getBytes()
-        );
-        return fullPath;
+        } catch (IllegalStateException | IOException e){
+            throw new RuntimeException(e);
+        }
+
     }
 
     public FileSaver(String path) {

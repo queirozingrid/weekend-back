@@ -4,9 +4,13 @@ package com.squirtle.weekend.controller;
 import com.squirtle.weekend.models.Endereco;
 import com.squirtle.weekend.repository.EnderecoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;

@@ -134,7 +134,6 @@ public class Estabelecimento {
 	}
 
 	public void setLogo(String logo) {
-		FileSaver.saveLogo(logo);
 		this.logo = logo;
 	}
 

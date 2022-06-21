@@ -152,4 +152,21 @@ public class Estabelecimento {
 	public void setCategorias(List<Categoria> categorias) {
 		this.categorias = categorias;
 	}
+
+	@Override
+	public String toString() {
+		return "Estabelecimento{" +
+				"id=" + id +
+				", cnpj='" + cnpj + '\'' +
+				", nomeFantasia='" + nomeFantasia + '\'' +
+				", razaoSocial='" + razaoSocial + '\'' +
+				", email='" + email + '\'' +
+				", senha='" + senha + '\'' +
+				", telefone1='" + telefone1 + '\'' +
+				", telefone2='" + telefone2 + '\'' +
+				", logo='" + logo + '\'' +
+				", endereco=" + endereco +
+				", categorias=" + categorias +
+				'}';
+	}
 }

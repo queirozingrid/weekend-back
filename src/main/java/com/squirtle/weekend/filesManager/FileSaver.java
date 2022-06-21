@@ -1,11 +1,5 @@
 package com.squirtle.weekend.filesManager;
 
-import com.google.cloud.storage.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
-
 public class FileSaver {
     private static String path = "https://storage.googleapis.com/imagens-wknd/logos-est/";
 

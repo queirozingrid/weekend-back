@@ -28,15 +28,7 @@ public class EstabelecimentoController {
     private EstabelecimentoRepository estabelecimentoRepository;
 
     @PostMapping(value = "/salvar")
-    public  Estabelecimento salvar(@RequestBody @Valid Estabelecimento estabelecimento,
-                                   MultipartFile logo) {
-
-        if (logo != null && !logo.getOriginalFilename().isEmpty()) {
-            String path = FileSaver.saveLogo(logo);
-            estabelecimento.setLogo(path);
-        } else {
-            System.out.println("entrei no else");
-        }
+    public  Estabelecimento salvar(@RequestBody @Valid Estabelecimento estabelecimento) {
             return estabelecimentoRepository.save(estabelecimento);
     }
 

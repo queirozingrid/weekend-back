@@ -29,6 +29,7 @@ public class EstabelecimentoController {
 
     @PostMapping(value = "/salvar")
     public  Estabelecimento salvar(@RequestBody @Valid Estabelecimento estabelecimento) {
+        // um comentário teste
             return estabelecimentoRepository.save(estabelecimento);
     }
 

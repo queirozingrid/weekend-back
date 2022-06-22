@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -51,6 +53,12 @@ public class Estabelecimento {
 	private String telefone2;
 
 	private String logo;
+
+	private Boolean estacionamento;
+
+	private Boolean espacoKids;
+
+	private String linkCardapio;
 
 	@OneToOne(cascade = CascadeType.PERSIST)
 	private Endereco endereco;
@@ -151,6 +159,30 @@ public class Estabelecimento {
 
 	public void setCategorias(List<Categoria> categorias) {
 		this.categorias = categorias;
+	}
+
+	public Boolean getEstacionamento() {
+		return estacionamento;
+	}
+
+	public void setEstacionamento(Boolean estacionamento) {
+		this.estacionamento = estacionamento;
+	}
+
+	public Boolean getEspacoKids() {
+		return espacoKids;
+	}
+
+	public void setEspacoKids(Boolean espacoKids) {
+		this.espacoKids = espacoKids;
+	}
+
+	public String getLinkCardapio() {
+		return linkCardapio;
+	}
+
+	public void setLinkCardapio(String linkCardapio) {
+		this.linkCardapio = linkCardapio;
 	}
 
 	@Override

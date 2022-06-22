@@ -4,9 +4,12 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -40,7 +43,11 @@ public class Evento {
 	private String descricao;
 	
 	@NotNull
-	private Integer faixaPrecos;
+	@Min(1)
+	@Max(5)
+	private int faixaPrecos;
+
+	private Boolean precisaIngresso;
 	private String poster;
 	private String atracoes;
 	
@@ -48,6 +55,14 @@ public class Evento {
 	private Boolean recorrente;
 	@NotNull
 	private Boolean cobraCouvert;
+
+	private Boolean visibilidade;
+
+	@Lob
+	private String descricaoCouvert;
+
+	private ArrayList<String> fotos;
+
 	@NotNull
 	private Double valorEntrada;
 	
@@ -152,5 +167,41 @@ public class Evento {
 
 	public void setTags(List<Tag> tags) {
 		this.tags = tags;
+	}
+
+	public String getDescricaoCouvert() {
+		return descricaoCouvert;
+	}
+
+	public void setDescricaoCouvert(String descricaoCouvert) {
+		this.descricaoCouvert = descricaoCouvert;
+	}
+
+	public Boolean getVisibilidade() {
+		return visibilidade;
+	}
+
+	public void setVisibilidade(Boolean visibilidade) {
+		this.visibilidade = visibilidade;
+	}
+
+	public ArrayList<String> getFotos() {
+		return fotos;
+	}
+
+	public void setFotos(ArrayList<String> fotos) {
+		this.fotos = fotos;
+	}
+
+	public void setFaixaPrecos(int faixaPrecos) {
+		this.faixaPrecos = faixaPrecos;
+	}
+
+	public Boolean getPrecisaIngresso() {
+		return precisaIngresso;
+	}
+
+	public void setPrecisaIngresso(Boolean precisaIngresso) {
+		this.precisaIngresso = precisaIngresso;
 	}
 }

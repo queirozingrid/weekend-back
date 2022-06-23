@@ -61,6 +61,8 @@ public class Evento {
 	@Lob
 	private String descricaoCouvert;
 
+	private Double valorCouvert;
+
 	private ArrayList<String> fotos;
 
 	@NotNull
@@ -203,5 +205,13 @@ public class Evento {
 
 	public void setPrecisaIngresso(Boolean precisaIngresso) {
 		this.precisaIngresso = precisaIngresso;
+	}
+
+	public Double getValorCouvert() {
+		return valorCouvert;
+	}
+
+	public void setValorCouvert(Double valorCouvert) {
+		this.valorCouvert = valorCouvert;
 	}
 }

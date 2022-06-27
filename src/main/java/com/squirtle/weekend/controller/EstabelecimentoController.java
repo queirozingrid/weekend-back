@@ -1,5 +1,6 @@
 package com.squirtle.weekend.controller;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.squirtle.weekend.filesManager.FileSaver;
 import com.squirtle.weekend.models.Estabelecimento;
 import com.squirtle.weekend.repository.EstabelecimentoRepository;
@@ -28,9 +29,17 @@ public class EstabelecimentoController {
     private EstabelecimentoRepository estabelecimentoRepository;
 
     @PostMapping(value = "/salvar")
-    public  Estabelecimento salvar(@RequestBody @Valid Estabelecimento estabelecimento) {
-        // um comentário teste
-            return estabelecimentoRepository.save(estabelecimento);
+    public  Estabelecimento salvar(@RequestParam("fileupload") MultipartFile file, @Valid Estabelecimento estabelecimento) {
+
+        return estabelecimentoRepository.save(estabelecimento);
+    }
+
+    @PostMapping("/salvarImagem")
+    public void salvarImagem(@RequestParam("fileupload") MultipartFile file, Estabelecimento estabelecimento){
+        System.out.println(estabelecimento.getCnpj());
+        System.out.println(estabelecimento.getNomeFantasia());
+        System.out.println(estabelecimento.getEndereco().getRua());
+        System.out.println(file.getOriginalFilename());
     }
 
 

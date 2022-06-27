@@ -2,11 +2,8 @@ package com.squirtle.weekend.filesManager;
 
 public class FileSaver {
 
-    public void helloWorld(){
-        System.out.println("I'm saying Hello World");
-    }
-    //private static String path = "https://storage.googleapis.com/imagens-wknd/logos-est/";
-
+//    private static String path = "https://storage.googleapis.com/imagens-wknd/logos-est/";
+//
 //    @Autowired
 //    private static Storage storage = StorageOptions.getDefaultInstance().getService();
 //
@@ -24,7 +21,7 @@ public class FileSaver {
 //            throw new RuntimeException(e);
 //        }
 //    }
-
+//
 //    public FileSaver(String path) {
 //        this.path = path;
 //    }

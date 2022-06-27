@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.naming.Binding;
 import javax.validation.Valid;
+import java.io.File;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,18 +29,25 @@ public class EstabelecimentoController {
     @Autowired
     private EstabelecimentoRepository estabelecimentoRepository;
 
+    // método oficial, favor, não fazer baguncinha aqui rsrs (o método para testes é o /salvarImagem)
     @PostMapping(value = "/salvar")
-    public  Estabelecimento salvar(@RequestParam("fileupload") MultipartFile file, @Valid Estabelecimento estabelecimento) {
-
-        return estabelecimentoRepository.save(estabelecimento);
+    public  void salvar(@RequestParam("fileupload") MultipartFile file, @Valid Estabelecimento estabelecimento) {
+        String pathLogo = FileSaver.saveLogo(file);
+        
+        estabelecimento.setLogo(pathLogo);
+       // return estabelecimentoRepository.save(estabelecimento);
     }
 
+    // método para testes
     @PostMapping("/salvarImagem")
     public void salvarImagem(@RequestParam("fileupload") MultipartFile file, Estabelecimento estabelecimento){
         System.out.println(estabelecimento.getCnpj());
         System.out.println(estabelecimento.getNomeFantasia());
         System.out.println(estabelecimento.getEndereco().getRua());
         System.out.println(file.getOriginalFilename());
+        if(file.getOriginalFilename().contains("png")){
+            System.out.println("contéééém");
+        }
     }
 
 

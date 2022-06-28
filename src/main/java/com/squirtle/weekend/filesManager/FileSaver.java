@@ -1,39 +1,50 @@
 package com.squirtle.weekend.filesManager;
 
-import com.google.cloud.storage.Bucket;
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.storage.Blob;
+import com.google.cloud.storage.Storage;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.StorageClient;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.FileInputStream;
-import java.io.InputStream;
+import java.io.*;
 
+@Service
 public class FileSaver {
 
-    private static String path = "https://storage.googleapis.com/imagens-wknd/logos-est/";
+    public static void writeLogo(MultipartFile file, String cnpj) throws IOException {
+        File newFile = multipartToFile(file);
+        String directory = "logos-est";
+        try {
+            FileInputStream serviceAccount =
+                    new FileInputStream("./serviceAccountKey.json");
 
-    public static String saveLogo(MultipartFile logo){
+            FirebaseOptions options = new FirebaseOptions.Builder()
+                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                    .setStorageBucket("wknd-back.appspot.com")
+                    .build();
 
-        FirebaseOptions options = FirebaseOptions.builder()
-                .setCredentials(credential)
-                .setDatabaseUrl(projectUrl)
-                .setStorageBucket("YOUR BUCKET LINK")
-                .build();
+            FirebaseApp fireApp = FirebaseApp.initializeApp(options);
 
-        FirebaseApp fireApp = FirebaseApp.initializeApp(options);
+            StorageClient storageClient = StorageClient.getInstance(fireApp);
 
-        StorageClient storageClient = StorageClient.getInstance(fireApp);
-        InputStream testFile = new FileInputStream();
-        String blobString = "NEW_FOLDER/" + "FILE_NAME.EXT";
+            InputStream testFile = new FileInputStream(newFile);
+            String blobString = directory + "/" + cnpj + "-" + newFile.getName();
 
-        storageClient.bucket().create(blobString, testFile , Bucket.BlobWriteOption.userProject("YOUR PROJECT ID"));
+            Blob testando = storageClient.bucket().create(blobString, testFile);
 
+            System.out.println("blobId: " + testando.getMediaLink());
 
-        return logo.getOriginalFilename();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
-//
-//    public FileSaver(String path) {
-//        this.path = path;
-//    }
+    public static File multipartToFile(MultipartFile multipart) throws IllegalStateException, IOException {
+        File convFile = new File(System.getProperty("java.io.tmpdir")+"/"+multipart.getOriginalFilename());
+        multipart.transferTo(convFile);
+        return convFile;
+    }
 }

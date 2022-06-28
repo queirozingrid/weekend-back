@@ -71,6 +71,15 @@
 			<artifactId>firebase-admin</artifactId>
 			<version>8.2.0</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.google.firebase/firebase-storage -->
+		<!-- https://mvnrepository.com/artifact/com.google.cloud/google-cloud-storage -->
+		<dependency>
+			<groupId>com.google.cloud</groupId>
+			<artifactId>google-cloud-storage</artifactId>
+			<version>2.6.1</version>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>

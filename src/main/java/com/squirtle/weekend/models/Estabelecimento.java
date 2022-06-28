@@ -1,17 +1,11 @@
 package com.squirtle.weekend.models;
 
-import java.io.File;
 import java.util.List;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.squirtle.weekend.filesManager.FileSaver;
-import org.hibernate.annotations.Cascade;
 import org.springframework.lang.NonNull;
 
 import lombok.Getter;

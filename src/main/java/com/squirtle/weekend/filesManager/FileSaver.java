@@ -1,11 +1,16 @@
 package com.squirtle.weekend.filesManager;
 
+import com.google.auth.oauth2.AccessToken;
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.storage.Blob;
+import com.google.cloud.storage.BlobInfo;
+import com.google.cloud.storage.Bucket;
 import com.google.cloud.storage.Storage;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.StorageClient;
+import org.hibernate.event.spi.SaveOrUpdateEvent;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,9 +38,24 @@ public class FileSaver {
             InputStream testFile = new FileInputStream(newFile);
             String blobString = directory + "/" + cnpj + "-" + newFile.getName();
 
-            Blob testando = storageClient.bucket().create(blobString, testFile);
+            Blob arquivo = storageClient.bucket().create(blobString, testFile);
 
-            System.out.println("blobId: " + testando.getMediaLink());
+            System.out.println("link: " + arquivo.getMediaLink());
+            System.out.println("link: " + arquivo.getSelfLink());
+            System.out.println("link: " + arquivo.getGeneration());
+            System.out.println("link: " + arquivo.getGeneratedId());
+            System.out.println("link: " + arquivo.getBucket());
+            System.out.println("link: " + arquivo.getBlobId());
+            System.out.println("link: " + arquivo.getBlobId().toGsUtilUri());
+            System.out.println("link: " + arquivo.getBlobId().getGeneration());
+            System.out.println("LINK: " + fireApp.getOptions().getDatabaseUrl());
+            System.out.println("link: " + fireApp.getOptions().getStorageBucket());
+            System.out.println("link: " + storageClient.bucket().getIamConfiguration().getPublicAccessPrevention());
+            System.out.println("link: " + storageClient.bucket().getSelfLink());
+            Bucket bucket = storageClient.bucket();
+            System.out.println(bucket.get(arquivo.getName()));
+
+
 
         } catch (Exception e){
             e.printStackTrace();

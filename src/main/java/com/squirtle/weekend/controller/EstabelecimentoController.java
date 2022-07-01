@@ -26,7 +26,7 @@ public class EstabelecimentoController {
 
     // método oficial, favor, não fazer baguncinha aqui rsrs (o método para testes é o /salvarImagem)
     @PostMapping(value = "/salvar")
-    public  void salvar(@RequestParam("fileupload") MultipartFile file, @Valid Estabelecimento estabelecimento) throws IOException {
+    public void salvar(@RequestParam("fileupload") MultipartFile file, @Valid Estabelecimento estabelecimento) throws IOException {
 
         FileSaver.writeLogo(file, estabelecimento.getCnpj());
        // return estabelecimentoRepository.save(estabelecimento);

@@ -26,10 +26,16 @@ public class EstabelecimentoController {
 
     // método oficial, favor, não fazer baguncinha aqui rsrs (o método para testes é o /salvarImagem)
     @PostMapping(value = "/salvar")
-    public void salvar(@RequestParam("fileupload") MultipartFile file, @Valid Estabelecimento estabelecimento) throws IOException {
-
-        FileSaver.writeLogo(file, estabelecimento.getCnpj());
-       // return estabelecimentoRepository.save(estabelecimento);
+    public Estabelecimento salvar(@RequestParam("fileupload") MultipartFile file, @Valid Estabelecimento estabelecimento) throws IOException {
+        Estabelecimento e2 = estabelecimentoRepository.save(estabelecimento);
+        System.out.println(e2.getId());
+        if(file != null){
+            estabelecimento.setLogo(FileSaver.writeLogo(file, e2.getId()));
+        }
+        else {
+            estabelecimento.setLogo(null);
+        }
+       return estabelecimentoRepository.save(estabelecimento);
     }
 
 
@@ -48,9 +54,21 @@ public class EstabelecimentoController {
         estabelecimentoRepository.deleteById(id);
     }
     @PutMapping("/editar")
-    public ResponseEntity<Estabelecimento> editar (@RequestBody @Valid Estabelecimento estabelecimento){
+    public ResponseEntity<Estabelecimento> editar (@RequestParam("fileupload") MultipartFile file, @Valid Estabelecimento estabelecimento) throws IOException {
+        // se o estabelecimento já tem logo e mandou um arquivo, quer dizer que ele quer atualizar a logo
+        // então, eu excluo a logo antiga da base
+        if(estabelecimento.getLogo() != null && file != null){
+            // não implementei ainda rsrs
+        }
         Estabelecimento e2 = estabelecimentoRepository.save(estabelecimento);
-        return new ResponseEntity<Estabelecimento>(e2, HttpStatus.OK);
+        System.out.println(e2.getId());
+        if(file != null){
+            estabelecimento.setLogo(FileSaver.writeLogo(file, e2.getId()));
+        }
+        else {
+            estabelecimento.setLogo(null);
+        }
+        return new ResponseEntity<Estabelecimento>(estabelecimento, HttpStatus.OK);
     }
 }
 

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -27,8 +28,9 @@ public class EstabelecimentoController {
     // método oficial, favor, não fazer baguncinha aqui rsrs (o método para testes é o /salvarImagem)
     @PostMapping(value = "/salvar")
     public void salvar(@RequestParam("fileupload") MultipartFile file, @Valid Estabelecimento estabelecimento) throws IOException {
-
-        FileSaver.writeLogo(file, estabelecimento.getCnpj());
+        FileSaver.saveLogo(file, estabelecimento.getCnpj());
+        //FileSaver.printBucketAcl();
+        //FileSaver.writeLogo(file, estabelecimento.getCnpj());
        // return estabelecimentoRepository.save(estabelecimento);
     }
 

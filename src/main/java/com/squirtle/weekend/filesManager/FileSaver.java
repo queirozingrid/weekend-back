@@ -1,64 +1,66 @@
 package com.squirtle.weekend.filesManager;
 
-import com.google.auth.oauth2.AccessToken;
+import com.google.auth.Credentials;
 import com.google.auth.oauth2.GoogleCredentials;
-import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Bucket;
+import com.google.cloud.storage.BucketInfo;
 import com.google.cloud.storage.Storage;
+import com.google.cloud.storage.*;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.StorageClient;
-import org.hibernate.event.spi.SaveOrUpdateEvent;
-import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.util.List;
 
-@Service
 public class FileSaver {
+    private static String path = "https://console.cloud.google.com/storage/browser/imagens-wknd/";
+    //private static String path = "https://storage.googleapis.com/imagens-wknd/logos-est/";
+    @Autowired
+    private static Storage storage = StorageOptions.getDefaultInstance().getService();
 
-    public static void writeLogo(MultipartFile file, String cnpj) throws IOException {
-        File newFile = multipartToFile(file);
+
+    public static String saveLogo(MultipartFile logo, String cnpj) throws IOException {
+        File newFile = multipartToFile(logo);
         String directory = "logos-est";
         try {
-            FileInputStream serviceAccount =
-                    new FileInputStream("./serviceAccountKey.json");
+            GoogleCredentials credentials = GoogleCredentials.fromStream
+                    (new FileInputStream("atomic-producer-353211-797cf151dd07.json"));
+            System.out.println(credentials);
 
-            FirebaseOptions options = new FirebaseOptions.Builder()
-                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                    .setStorageBucket("wknd-back.appspot.com")
-                    .build();
+            BlobId blobId = BlobId.of("imagens-wknd", logo.getOriginalFilename());
+            BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();
 
-            FirebaseApp fireApp = FirebaseApp.initializeApp(options);
-
-            StorageClient storageClient = StorageClient.getInstance(fireApp);
+            StorageClient storageClient = StorageClient.getInstance((FirebaseApp) storage);
 
             InputStream testFile = new FileInputStream(newFile);
             String blobString = directory + "/" + cnpj + "-" + newFile.getName();
 
             Blob arquivo = storageClient.bucket().create(blobString, testFile);
 
-            System.out.println("link: " + arquivo.getMediaLink());
-            System.out.println("link: " + arquivo.getSelfLink());
-            System.out.println("link: " + arquivo.getGeneration());
-            System.out.println("link: " + arquivo.getGeneratedId());
-            System.out.println("link: " + arquivo.getBucket());
-            System.out.println("link: " + arquivo.getBlobId());
-            System.out.println("link: " + arquivo.getBlobId().toGsUtilUri());
-            System.out.println("link: " + arquivo.getBlobId().getGeneration());
-            System.out.println("LINK: " + fireApp.getOptions().getDatabaseUrl());
-            System.out.println("link: " + fireApp.getOptions().getStorageBucket());
-            System.out.println("link: " + storageClient.bucket().getIamConfiguration().getPublicAccessPrevention());
-            System.out.println("link: " + storageClient.bucket().getSelfLink());
-            Bucket bucket = storageClient.bucket();
-            System.out.println(bucket.get(arquivo.getName()));
+            System.out.println(arquivo.getMediaLink());
 
+//            storage.getOptions().toBuilder().setCredentials(credentials);
+//            System.out.println(credentials.getAccessToken());
+//
+//            BlobInfo blob2 = storage.create(blobInfo, logo.getBytes());
+//            BlobInfo blob = storage.create(
+//                    BlobInfo.newBuilder(
+//                            "imagens-wknd",
+//                            logo.getOriginalFilename())
+//                            .build(),
+//                    logo.getBytes(),
+//                    Storage.BlobTargetOption.predefinedAcl(Storage.PredefinedAcl.PUBLIC_READ)
+//
+//            );
+//            //String api = "AIzaSyBCR2Dm36jKBurKS_QXlO2FpW6s4MBJDKM";
+//            System.out.printf(blob.getMediaLink());
+            return arquivo.getMediaLink();
 
-
-        } catch (Exception e){
-            e.printStackTrace();
+        } catch (IllegalStateException | IOException e) {
+            throw new RuntimeException(e);
         }
 
     }

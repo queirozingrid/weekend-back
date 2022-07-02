@@ -54,7 +54,7 @@ public class EstabelecimentoController {
         estabelecimentoRepository.deleteById(id);
     }
     @PutMapping("/editar")
-    public ResponseEntity<Estabelecimento> editar (@RequestParam("fileupload") MultipartFile file, @Valid Estabelecimento estabelecimento) throws IOException {
+    public Estabelecimento editar (@RequestParam("fileupload") MultipartFile file, @Valid Estabelecimento estabelecimento) throws IOException {
         // se o estabelecimento já tem logo e mandou um arquivo, quer dizer que ele quer atualizar a logo
         // então, eu excluo a logo antiga da base
         if(estabelecimento.getLogo() != null && file != null){
@@ -68,7 +68,8 @@ public class EstabelecimentoController {
         else {
             estabelecimento.setLogo(null);
         }
-        return new ResponseEntity<Estabelecimento>(estabelecimento, HttpStatus.OK);
+        return estabelecimentoRepository.save(estabelecimento);
+        //return new ResponseEntity<Estabelecimento>(estabelecimento, HttpStatus.OK);
     }
 }
 

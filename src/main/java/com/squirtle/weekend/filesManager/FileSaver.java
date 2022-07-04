@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.util.List;
 
 @Service
 public class FileSaver {
@@ -42,6 +43,11 @@ public class FileSaver {
             return null;
         }
 
+    }
+
+    public static void saveEventPics(List<MultipartFile> files, MultipartFile poster) throws IOException, FileNotFoundException{
+        System.out.println(files);
+        System.out.println("poster: " + poster.getOriginalFilename());
     }
     public static File multipartToFile(MultipartFile multipart) throws IllegalStateException, IOException {
         File convFile = new File(System.getProperty("java.io.tmpdir")+"/"+multipart.getOriginalFilename());

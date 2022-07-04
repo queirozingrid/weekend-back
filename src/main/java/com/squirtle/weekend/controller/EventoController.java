@@ -1,5 +1,6 @@
 package com.squirtle.weekend.controller;
 
+import com.squirtle.weekend.filesManager.FileSaver;
 import com.squirtle.weekend.models.Evento;
 import com.squirtle.weekend.models.Tag;
 import com.squirtle.weekend.repository.EventoRepository;
@@ -7,8 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,7 +25,12 @@ public class EventoController {
     private EventoRepository eventoRepository;
 
     @PostMapping("/salvar")
-    public Evento salvar(@RequestBody @Valid Evento evento) { return eventoRepository.save(evento); }
+    public void salvar(@RequestParam("fileupload") List<MultipartFile> files,
+                       @RequestParam("posterUp") MultipartFile poster,
+                       @Valid Evento evento) throws IOException, FileNotFoundException {
+        FileSaver.saveEventPics(files, poster);
+       // return eventoRepository.save(evento);
+    }
 
     @RequestMapping(value = "/editar", produces = "application/json", method=RequestMethod.PUT)
     public ResponseEntity<Evento> editar(@RequestBody @Valid Evento evento){

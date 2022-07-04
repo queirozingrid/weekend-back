@@ -55,11 +55,6 @@ public class EstabelecimentoController {
     }
     @PutMapping("/editar")
     public Estabelecimento editar (@RequestParam("fileupload") MultipartFile file, @Valid Estabelecimento estabelecimento) throws IOException {
-        // se o estabelecimento já tem logo e mandou um arquivo, quer dizer que ele quer atualizar a logo
-        // então, eu excluo a logo antiga da base
-        if(estabelecimento.getLogo() != null && file != null){
-            // não implementei ainda rsrs
-        }
         Estabelecimento e2 = estabelecimentoRepository.save(estabelecimento);
         System.out.println(e2.getId());
         if(file != null){

@@ -30,7 +30,7 @@ public class EstabelecimentoController {
         Estabelecimento e2 = estabelecimentoRepository.save(estabelecimento);
         System.out.println(e2.getId());
         if(file != null){
-            estabelecimento.setLogo(FileSaver.writeLogo(file, e2.getId()));
+            estabelecimento.setLogo(FileSaver.writeLogo(file, e2.getId(), e2.getNomeFantasia()));
         }
         else {
             estabelecimento.setLogo(null);
@@ -63,7 +63,7 @@ public class EstabelecimentoController {
         Estabelecimento e2 = estabelecimentoRepository.save(estabelecimento);
         System.out.println(e2.getId());
         if(file != null){
-            estabelecimento.setLogo(FileSaver.writeLogo(file, e2.getId()));
+            estabelecimento.setLogo(FileSaver.writeLogo(file, e2.getId(), e2.getNomeFantasia()));
         }
         else {
             estabelecimento.setLogo(null);

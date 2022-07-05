@@ -24,20 +24,18 @@ public class EventoController {
     @Autowired
     private EventoRepository eventoRepository;
 
-    @PostMapping("/salvar")
-    public void salvar(@RequestParam("fileupload") List<MultipartFile> files,
-                       @RequestParam("posterUp") MultipartFile poster,
-                       @Valid Evento evento) throws IOException, FileNotFoundException {
-        evento.setFotos(FileSaver.saveEventPics(files, poster, evento.getId()));
-        System.out.println(evento.getFotos());
-       // return eventoRepository.save(evento);
-    }
+    @PutMapping("/editar")
+    public Evento salvar(@RequestParam("fileupload") List<MultipartFile> files,
+                         @RequestParam("posterUp") MultipartFile poster,
+                         @Valid Evento evento) throws IOException, FileNotFoundException {
 
-    @RequestMapping(value = "/editar", produces = "application/json", method=RequestMethod.PUT)
-    public ResponseEntity<Evento> editar(@RequestBody @Valid Evento evento){
         Evento e2 = eventoRepository.save(evento);
-        ResponseEntity<Evento> reponse = new ResponseEntity<Evento>(e2, HttpStatus.OK);
-        return reponse;
+        evento.setFotos(FileSaver.saveEventPics(files,
+                                                e2.getEstabelecimento().getId(),
+                                                e2.getEstabelecimento().getNomeFantasia()));
+        evento.setPoster(FileSaver.saveEventPoster(poster, e2.getEstabelecimento().getId(), e2.getEstabelecimento().getNomeFantasia()));
+
+        return eventoRepository.save(evento);
     }
 
     @DeleteMapping("/{id}")

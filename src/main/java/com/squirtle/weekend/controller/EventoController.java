@@ -28,7 +28,8 @@ public class EventoController {
     public void salvar(@RequestParam("fileupload") List<MultipartFile> files,
                        @RequestParam("posterUp") MultipartFile poster,
                        @Valid Evento evento) throws IOException, FileNotFoundException {
-        FileSaver.saveEventPics(files, poster);
+        evento.setFotos(FileSaver.saveEventPics(files, poster, evento.getId()));
+        System.out.println(evento.getFotos());
        // return eventoRepository.save(evento);
     }
 

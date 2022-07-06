@@ -30,10 +30,14 @@ public class EventoController {
                          @Valid Evento evento) throws IOException, FileNotFoundException {
 
         Evento e2 = eventoRepository.save(evento);
-        evento.setFotos(FileSaver.saveEventPics(files,
-                                                e2.getEstabelecimento().getId(),
-                                                e2.getEstabelecimento().getNomeFantasia()));
-        evento.setPoster(FileSaver.saveEventPoster(poster, e2.getEstabelecimento().getId(), e2.getEstabelecimento().getNomeFantasia()));
+        if(files != null && !files.isEmpty()){
+            evento.setFotos(FileSaver.saveEventPics(files,
+                    e2.getEstabelecimento().getId(),
+                    e2.getEstabelecimento().getNomeFantasia()));
+        }
+        if(poster!=null){
+            evento.setPoster(FileSaver.saveEventPoster(poster, e2.getEstabelecimento().getId(), e2.getEstabelecimento().getNomeFantasia()));
+        }
 
         return eventoRepository.save(evento);
     }
@@ -44,10 +48,14 @@ public class EventoController {
                          @Valid Evento evento) throws IOException, FileNotFoundException {
 
         Evento e2 = eventoRepository.save(evento);
-        evento.setFotos(FileSaver.saveEventPics(files,
-                e2.getEstabelecimento().getId(),
-                e2.getEstabelecimento().getNomeFantasia()));
-        evento.setPoster(FileSaver.saveEventPoster(poster, e2.getEstabelecimento().getId(), e2.getEstabelecimento().getNomeFantasia()));
+        if(files!=null && !files.isEmpty()){
+            evento.setFotos(FileSaver.saveEventPics(files,
+                    e2.getEstabelecimento().getId(),
+                    e2.getEstabelecimento().getNomeFantasia()));
+        }
+        if(poster!=null){
+            evento.setPoster(FileSaver.saveEventPoster(poster, e2.getEstabelecimento().getId(), e2.getEstabelecimento().getNomeFantasia()));
+        }
 
         return eventoRepository.save(evento);
     }

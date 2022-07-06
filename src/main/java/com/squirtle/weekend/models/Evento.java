@@ -39,6 +39,7 @@ public class Evento {
 	private Estabelecimento estabelecimento;
 
 	@NonNull
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
 	private LocalDateTime data;
 	private String descricao;
 	

@@ -71,6 +71,7 @@ public class FileSaver {
                 StorageClient storageClient = StorageClient.getInstance(fireApp);
 
                 InputStream testFile = new FileInputStream(newFile);
+                //exemplo:   diretório/1-nomeFantasia/arquivo.extensao
                 String blobString = directory + "/" + idEstabelecimento + "-" + nomeFantasia + "/" + newFile.getName();
                 Blob arquivo = storageClient.bucket().create(blobString, testFile);
                 System.out.println("link: " + arquivo.getMediaLink());

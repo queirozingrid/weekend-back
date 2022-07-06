@@ -25,7 +25,7 @@ public class EventoController {
     private EventoRepository eventoRepository;
 
     @PutMapping("/editar")
-    public Evento salvar(@RequestParam("fileupload") List<MultipartFile> files,
+    public Evento editar(@RequestParam("fileupload") List<MultipartFile> files,
                          @RequestParam("posterUp") MultipartFile poster,
                          @Valid Evento evento) throws IOException, FileNotFoundException {
 
@@ -33,6 +33,20 @@ public class EventoController {
         evento.setFotos(FileSaver.saveEventPics(files,
                                                 e2.getEstabelecimento().getId(),
                                                 e2.getEstabelecimento().getNomeFantasia()));
+        evento.setPoster(FileSaver.saveEventPoster(poster, e2.getEstabelecimento().getId(), e2.getEstabelecimento().getNomeFantasia()));
+
+        return eventoRepository.save(evento);
+    }
+
+    @PostMapping("/salvar")
+    public Evento salvar(@RequestParam("fileupload") List<MultipartFile> files,
+                         @RequestParam("posterUp") MultipartFile poster,
+                         @Valid Evento evento) throws IOException, FileNotFoundException {
+
+        Evento e2 = eventoRepository.save(evento);
+        evento.setFotos(FileSaver.saveEventPics(files,
+                e2.getEstabelecimento().getId(),
+                e2.getEstabelecimento().getNomeFantasia()));
         evento.setPoster(FileSaver.saveEventPoster(poster, e2.getEstabelecimento().getId(), e2.getEstabelecimento().getNomeFantasia()));
 
         return eventoRepository.save(evento);

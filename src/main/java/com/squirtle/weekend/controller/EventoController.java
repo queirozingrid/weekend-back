@@ -14,6 +14,7 @@ import javax.validation.Valid;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,10 +31,14 @@ public class EventoController {
                          @Valid Evento evento) throws IOException, FileNotFoundException {
 
         Evento e2 = eventoRepository.save(evento);
-        evento.setFotos(FileSaver.saveEventPics(files,
-                                                e2.getEstabelecimento().getId(),
-                                                e2.getEstabelecimento().getNomeFantasia()));
-        evento.setPoster(FileSaver.saveEventPoster(poster, e2.getEstabelecimento().getId(), e2.getEstabelecimento().getNomeFantasia()));
+        if(files != null && !files.isEmpty()){
+            evento.setFotos(FileSaver.saveEventPics(files,
+                    e2.getEstabelecimento().getId(),
+                    e2.getEstabelecimento().getNomeFantasia()));
+        }
+        if(poster!=null){
+            evento.setPoster(FileSaver.saveEventPoster(poster, e2.getEstabelecimento().getId(), e2.getEstabelecimento().getNomeFantasia()));
+        }
 
         return eventoRepository.save(evento);
     }
@@ -44,10 +49,14 @@ public class EventoController {
                          @Valid Evento evento) throws IOException, FileNotFoundException {
 
         Evento e2 = eventoRepository.save(evento);
-        evento.setFotos(FileSaver.saveEventPics(files,
-                e2.getEstabelecimento().getId(),
-                e2.getEstabelecimento().getNomeFantasia()));
-        evento.setPoster(FileSaver.saveEventPoster(poster, e2.getEstabelecimento().getId(), e2.getEstabelecimento().getNomeFantasia()));
+        if(files!=null && !files.isEmpty()){
+            evento.setFotos(FileSaver.saveEventPics(files,
+                    e2.getEstabelecimento().getId(),
+                    e2.getEstabelecimento().getNomeFantasia()));
+        }
+        if(poster!=null){
+            evento.setPoster(FileSaver.saveEventPoster(poster, e2.getEstabelecimento().getId(), e2.getEstabelecimento().getNomeFantasia()));
+        }
 
         return eventoRepository.save(evento);
     }
@@ -56,8 +65,23 @@ public class EventoController {
     public void deletar(@PathVariable(value = "id") Long id) { eventoRepository.deleteById(id); }
 
     @GetMapping("/todos")
-    public List<Evento> listar() { return eventoRepository.findAll(); }
+    public List<Evento> listar() {
+        List<Evento> eventosCompletos = eventoRepository.findAll();
+        List<Evento> eventosResponse = new ArrayList<>();
+        for (Evento e: eventosCompletos) {
+            e.getEstabelecimento().setSenha(null);
+            eventosResponse.add(e);
+        }
+        return eventosResponse;
+    }
 
     @GetMapping("/{id}")
-    public Optional<Evento> buscar(@PathVariable(value = "id") Long id) { return eventoRepository.findById(id); }
+    public Evento buscar(@PathVariable(value = "id") Long id) {
+
+        Evento eventoCompleto = eventoRepository.findById(id).get();
+        Evento eventoResponse = eventoCompleto;
+        eventoResponse.getEstabelecimento().setSenha(null);
+
+        return eventoResponse;
+    }
 }

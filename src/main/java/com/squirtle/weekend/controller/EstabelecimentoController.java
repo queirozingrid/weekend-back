@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,12 +42,20 @@ public class EstabelecimentoController {
 
     @GetMapping("/todos")
     public List<Estabelecimento> listarTodos () {
-        return estabelecimentoRepository.findAll();
+        List<Estabelecimento> todos = estabelecimentoRepository.findAll();
+        List<Estabelecimento> todosResponse = new ArrayList<>();
+        for (Estabelecimento e: todos) {
+            e.setSenha(null);
+            todosResponse.add(e);
+        }
+        return todosResponse;
     }
 
     @GetMapping("/{id}")
-    public Optional<Estabelecimento> listarPorId (@PathVariable(value = "id") Long id){
-        return estabelecimentoRepository.findById(id);
+    public Estabelecimento listarPorId (@PathVariable(value = "id") Long id){
+        Estabelecimento estabelecimento = estabelecimentoRepository.findById(id).get();
+        estabelecimento.setSenha(null);
+        return estabelecimento;
     }
 
     @DeleteMapping("/{id}")

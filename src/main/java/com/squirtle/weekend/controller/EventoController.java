@@ -1,5 +1,6 @@
 package com.squirtle.weekend.controller;
 
+import com.squirtle.weekend.dto.output.evento.EventoDTO;
 import com.squirtle.weekend.filesManager.FileSaver;
 import com.squirtle.weekend.models.Evento;
 import com.squirtle.weekend.models.Tag;
@@ -26,9 +27,9 @@ public class EventoController {
     private EventoRepository eventoRepository;
 
     @PutMapping("/editar")
-    public Evento editar(@RequestParam("fileupload") List<MultipartFile> files,
-                         @RequestParam("posterUp") MultipartFile poster,
-                         @Valid Evento evento) throws IOException, FileNotFoundException {
+    public EventoDTO editar(@RequestParam("fileupload") List<MultipartFile> files,
+                            @RequestParam("posterUp") MultipartFile poster,
+                            @Valid Evento evento) throws IOException, FileNotFoundException {
 
         Evento e2 = eventoRepository.save(evento);
         if(files != null && !files.isEmpty()){
@@ -40,11 +41,11 @@ public class EventoController {
             evento.setPoster(FileSaver.saveEventPoster(poster, e2.getEstabelecimento().getId(), e2.getEstabelecimento().getNomeFantasia()));
         }
 
-        return eventoRepository.save(evento);
+        return new EventoDTO(eventoRepository.save(evento));
     }
 
     @PostMapping("/salvar")
-    public Evento salvar(@RequestParam("fileupload") List<MultipartFile> files,
+    public EventoDTO salvar(@RequestParam("fileupload") List<MultipartFile> files,
                          @RequestParam("posterUp") MultipartFile poster,
                          @Valid Evento evento) throws IOException, FileNotFoundException {
 
@@ -58,30 +59,25 @@ public class EventoController {
             evento.setPoster(FileSaver.saveEventPoster(poster, e2.getEstabelecimento().getId(), e2.getEstabelecimento().getNomeFantasia()));
         }
 
-        return eventoRepository.save(evento);
+        return new EventoDTO(eventoRepository.save(evento));
     }
 
     @DeleteMapping("/{id}")
     public void deletar(@PathVariable(value = "id") Long id) { eventoRepository.deleteById(id); }
 
     @GetMapping("/todos")
-    public List<Evento> listar() {
+    public List<EventoDTO> listar() {
         List<Evento> eventosCompletos = eventoRepository.findAll();
-        List<Evento> eventosResponse = new ArrayList<>();
-        for (Evento e: eventosCompletos) {
-            e.getEstabelecimento().setSenha(null);
-            eventosResponse.add(e);
-        }
+        List<EventoDTO> eventosResponse = EventoDTO.eventListConverter(eventosCompletos);
+
         return eventosResponse;
     }
 
     @GetMapping("/{id}")
-    public Evento buscar(@PathVariable(value = "id") Long id) {
+    public EventoDTO buscar(@PathVariable(value = "id") Long id) {
 
         Evento eventoCompleto = eventoRepository.findById(id).get();
-        Evento eventoResponse = eventoCompleto;
-        eventoResponse.getEstabelecimento().setSenha(null);
 
-        return eventoResponse;
+        return new EventoDTO(eventoCompleto);
     }
 }

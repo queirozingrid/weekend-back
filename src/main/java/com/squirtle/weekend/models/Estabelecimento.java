@@ -1,25 +1,31 @@
 package com.squirtle.weekend.models;
-
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
+import org.hibernate.validator.constraints.br.CNPJ;
 import org.springframework.lang.NonNull;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity(name = "estabelecimento")
 @Getter @Setter
-public class Estabelecimento {
+public class Estabelecimento implements UserDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@NotBlank
 	@NonNull
+	@CNPJ
 	private String cnpj;
 
 	@NotBlank
@@ -31,17 +37,10 @@ public class Estabelecimento {
 	private String razaoSocial;
 
 	@Email
-	@NonNull
-	@NotBlank
 	private String email;
 
-	@NotBlank
-	@NonNull
-	//@JsonIgnore
 	private String senha;
 
-	@NotBlank
-	@NonNull
 	private String telefone1;
 
 	private String telefone2;
@@ -61,123 +60,15 @@ public class Estabelecimento {
 	@JoinColumn(name = "estabelecimento_categoria")
 	private List<Categoria> categorias;
 
-	public Long getId() {
-		return id;
+	@ManyToMany(fetch = FetchType.EAGER)
+	private List<Role> roles = new ArrayList<>();
+
+
+	public void setSenha(String senha) {
+		this.senha = new BCryptPasswordEncoder().encode(senha);
+
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	@NonNull
-	public String getCnpj() {
-		return cnpj;
-	}
-
-	public void setCnpj(@NonNull String cnpj) {
-		this.cnpj = cnpj;
-	}
-
-	@NonNull
-	public String getNomeFantasia() {
-		return nomeFantasia;
-	}
-
-	public void setNomeFantasia(@NonNull String nomeFantasia) {
-		this.nomeFantasia = nomeFantasia;
-	}
-
-	@NonNull
-	public String getRazaoSocial() {
-		return razaoSocial;
-	}
-
-	public void setRazaoSocial(@NonNull String razaoSocial) {
-		this.razaoSocial = razaoSocial;
-	}
-
-	@NonNull
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(@NonNull String email) {
-		this.email = email;
-	}
-
-	@NonNull
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(@NonNull String senha) {
-		this.senha = senha;
-	}
-
-	@NonNull
-	public String getTelefone1() {
-		return telefone1;
-	}
-
-	public void setTelefone1(@NonNull String telefone1) {
-		this.telefone1 = telefone1;
-	}
-
-	public String getTelefone2() {
-		return telefone2;
-	}
-
-	public void setTelefone2(String telefone2) {
-		this.telefone2 = telefone2;
-	}
-
-	public String getLogo() {
-		return logo;
-	}
-
-	public void setLogo(String logo) {
-		this.logo = logo;
-	}
-
-	public Endereco getEndereco() {
-		return endereco;
-	}
-
-	public void setEndereco(Endereco endereco) {
-		this.endereco = endereco;
-	}
-
-	public List<Categoria> getCategorias() {
-		return categorias;
-	}
-
-	public void setCategorias(List<Categoria> categorias) {
-		this.categorias = categorias;
-	}
-
-	public Boolean getEstacionamento() {
-		return estacionamento;
-	}
-
-	public void setEstacionamento(Boolean estacionamento) {
-		this.estacionamento = estacionamento;
-	}
-
-	public Boolean getEspacoKids() {
-		return espacoKids;
-	}
-
-	public void setEspacoKids(Boolean espacoKids) {
-		this.espacoKids = espacoKids;
-	}
-
-	public String getLinkCardapio() {
-		return linkCardapio;
-	}
-
-	public void setLinkCardapio(String linkCardapio) {
-		this.linkCardapio = linkCardapio;
-	}
 
 	@Override
 	public String toString() {
@@ -194,5 +85,39 @@ public class Estabelecimento {
 				", endereco=" + endereco +
 				", categorias=" + categorias +
 				'}';
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return roles;
+	}
+
+	@Override
+	public String getPassword() {
+		return this.senha;
+	}
+
+	@Override
+	public String getUsername() {
+		return this.email;
+	}
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
 	}
 }

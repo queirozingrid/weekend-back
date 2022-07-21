@@ -36,6 +36,10 @@ public class FileSaver {
             String blobString = directory + "/" + id + "-" + nomeFantasia + "/" + newFile.getName();
 
             Blob arquivo = storageClient.bucket().create(blobString, testFile);
+            //System.out.println(storageClient.bucket().get(blobString));
+            //System.out.println(storageClient.bucket().get(blobString).delete());
+
+
 
             System.out.println("link: " + arquivo.getMediaLink());
             fireApp.delete();

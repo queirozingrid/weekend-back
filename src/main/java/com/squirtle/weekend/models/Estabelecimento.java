@@ -1,4 +1,5 @@
 package com.squirtle.weekend.models;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -59,6 +60,9 @@ public class Estabelecimento implements UserDetails {
 	@JoinColumn(name = "estabelecimento_categoria")
 	private List<Categoria> categorias;
 
+	@ManyToMany(fetch = FetchType.EAGER)
+	private List<Role> roles = new ArrayList<>();
+
 
 	public void setSenha(String senha) {
 		this.senha = new BCryptPasswordEncoder().encode(senha);
@@ -85,7 +89,7 @@ public class Estabelecimento implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return null;
+		return roles;
 	}
 
 	@Override

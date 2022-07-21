@@ -24,10 +24,9 @@ public class AutenticacaoService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<Estabelecimento> estabelecimento;
-        if(username.contains("@")){
+        if(username.contains("@")) {
             estabelecimento = estabelecimentoRepository.findByEmail(username);
-        }
-        else {
+        } else {
             estabelecimento = estabelecimentoRepository.findByCnpj(username);
         }
         if(estabelecimento.isPresent()){

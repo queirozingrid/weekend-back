@@ -17,7 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity(name = "estabelecimento")
-@Getter @Setter
+@Getter
 public class Estabelecimento implements UserDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -69,6 +69,61 @@ public class Estabelecimento implements UserDetails {
 
 	}
 
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setCnpj(@NonNull String cnpj) {
+		this.cnpj = cnpj;
+	}
+
+	public void setNomeFantasia(@NonNull String nomeFantasia) {
+		this.nomeFantasia = nomeFantasia;
+	}
+
+	public void setRazaoSocial(@NonNull String razaoSocial) {
+		this.razaoSocial = razaoSocial;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setTelefone1(String telefone1) {
+		this.telefone1 = telefone1;
+	}
+
+	public void setTelefone2(String telefone2) {
+		this.telefone2 = telefone2;
+	}
+
+	public void setLogo(String logo) {
+		this.logo = logo;
+	}
+
+	public void setEstacionamento(Boolean estacionamento) {
+		this.estacionamento = estacionamento;
+	}
+
+	public void setEspacoKids(Boolean espacoKids) {
+		this.espacoKids = espacoKids;
+	}
+
+	public void setLinkCardapio(String linkCardapio) {
+		this.linkCardapio = linkCardapio;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
+
+	public void setCategorias(List<Categoria> categorias) {
+		this.categorias = categorias;
+	}
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
 
 	@Override
 	public String toString() {

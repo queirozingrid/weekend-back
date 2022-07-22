@@ -1,5 +1,6 @@
 package com.squirtle.weekend.controller;
 
+import com.squirtle.weekend.dto.output.estabelecimento.EstabelecimentoDTO;
 import com.squirtle.weekend.filesManager.FileSaver;
 import com.squirtle.weekend.models.Estabelecimento;
 import com.squirtle.weekend.repository.EstabelecimentoRepository;
@@ -12,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,7 +28,7 @@ public class EstabelecimentoController {
 
     // método oficial, favor, não fazer baguncinha aqui rsrs (o método para testes é o /salvarImagem)
     @PostMapping(value = "/salvar")
-    public Estabelecimento salvar(@RequestParam("fileupload") MultipartFile file, @Valid Estabelecimento estabelecimento) throws IOException {
+    public EstabelecimentoDTO salvar(@RequestParam("fileupload") MultipartFile file, @Valid Estabelecimento estabelecimento) throws IOException {
         Estabelecimento e2 = estabelecimentoRepository.save(estabelecimento);
         System.out.println(e2.getId());
         if(file != null){
@@ -35,18 +37,24 @@ public class EstabelecimentoController {
         else {
             estabelecimento.setLogo(null);
         }
-       return estabelecimentoRepository.save(estabelecimento);
+       return new EstabelecimentoDTO(estabelecimentoRepository.save(estabelecimento));
     }
 
 
     @GetMapping("/todos")
-    public List<Estabelecimento> listarTodos () {
-        return estabelecimentoRepository.findAll();
+    public List<EstabelecimentoDTO> listarTodos () {
+        List<Estabelecimento> estabelecimentos = estabelecimentoRepository.findAll();
+        List<EstabelecimentoDTO> response = EstabelecimentoDTO.estListConverter(estabelecimentos);
+
+        return response;
     }
 
     @GetMapping("/{id}")
-    public Optional<Estabelecimento> listarPorId (@PathVariable(value = "id") Long id){
-        return estabelecimentoRepository.findById(id);
+    public EstabelecimentoDTO listarPorId (@PathVariable(value = "id") Long id){
+        Estabelecimento estabelecimento = estabelecimentoRepository.findById(id).get();
+        EstabelecimentoDTO response = new EstabelecimentoDTO(estabelecimento);
+
+        return response;
     }
 
     @DeleteMapping("/{id}")
@@ -54,7 +62,7 @@ public class EstabelecimentoController {
         estabelecimentoRepository.deleteById(id);
     }
     @PutMapping("/editar")
-    public Estabelecimento editar (@RequestParam("fileupload") MultipartFile file, @Valid Estabelecimento estabelecimento) throws IOException {
+    public EstabelecimentoDTO editar (@RequestParam("fileupload") MultipartFile file, @Valid Estabelecimento estabelecimento) throws IOException {
         Estabelecimento e2 = estabelecimentoRepository.save(estabelecimento);
         System.out.println(e2.getId());
         if(file != null){
@@ -63,8 +71,7 @@ public class EstabelecimentoController {
         else {
             estabelecimento.setLogo(null);
         }
-        return estabelecimentoRepository.save(estabelecimento);
-        //return new ResponseEntity<Estabelecimento>(estabelecimento, HttpStatus.OK);
+        return new EstabelecimentoDTO(estabelecimentoRepository.save(estabelecimento));
     }
 }
 

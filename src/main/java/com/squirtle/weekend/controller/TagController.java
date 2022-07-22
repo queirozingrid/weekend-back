@@ -1,7 +1,6 @@
 package com.squirtle.weekend.controller;
 
 import com.squirtle.weekend.models.Tag;
-import com.squirtle.weekend.models.Tag;
 import com.squirtle.weekend.repository.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -41,7 +41,7 @@ public class AutenticacaoTokenFilter extends OncePerRequestFilter {
     private void autenticar(String token) {
         String cnpjEst = tokenService.getCnpjEst(token);
         Estabelecimento estabelecimento = estabelecimentoRepository.findByCnpj(cnpjEst).get();
-        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(estabelecimento, estabelecimento.getPassword(), estabelecimento.getAuthorities());
+        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(estabelecimento, null, estabelecimento.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
     }

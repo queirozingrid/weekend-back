@@ -1,5 +1,6 @@
 package com.squirtle.weekend.dto.output.estabelecimento;
 
+import com.squirtle.weekend.models.Categoria;
 import com.squirtle.weekend.models.Endereco;
 import com.squirtle.weekend.models.Estabelecimento;
 import lombok.Getter;
@@ -16,6 +17,18 @@ public class EstabelecimentoDTO {
 
     private Endereco endereco;
 
+    private Boolean espacoKids;
+
+    private String nomeFantasia;
+
+    private String logo;
+
+    private List<Categoria> categorias;
+
+    private Boolean estacionamento;
+
+    private String linkCardapio;
+
     public EstabelecimentoDTO(){}
 
     public EstabelecimentoDTO(Estabelecimento estabelecimento){
@@ -23,6 +36,12 @@ public class EstabelecimentoDTO {
         this.cnpj = estabelecimento.getCnpj();
         this.email = estabelecimento.getEmail();
         this.endereco = estabelecimento.getEndereco();
+        this.espacoKids = estabelecimento.getEspacoKids();
+        this.nomeFantasia = estabelecimento.getNomeFantasia();
+        this.logo = estabelecimento.getLogo();
+        this.categorias = estabelecimento.getCategorias();
+        this.estacionamento = estabelecimento.getEstacionamento();
+        this.linkCardapio = estabelecimento.getLinkCardapio();
     }
 
     public static List<EstabelecimentoDTO> estListConverter(List<Estabelecimento> estabelecimentos){
